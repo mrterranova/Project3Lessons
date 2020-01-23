@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
           <Route exact path="/" component={Main} />
           <Route exact path="/home" component={Main} />
           <Route exact path="/lesson" component={Lesson} />

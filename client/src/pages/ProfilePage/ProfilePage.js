@@ -4,6 +4,7 @@ import "./style.css";
 function ProfilePage() {
   return (
     <div>
+        Profile Page
     </div>
   );
 }

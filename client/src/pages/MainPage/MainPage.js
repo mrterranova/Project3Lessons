@@ -4,6 +4,7 @@ import "./style.css";
 function MainPage() {
   return (
     <div>
+        Main Page
     </div>
   );
 }

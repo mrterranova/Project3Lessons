@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const adminSchema = new Schema({
   userName: { type: String, required: true}, 
-  notes: [{
+  lesson: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: "Lessons"
   }], 

@@ -4,6 +4,7 @@ import "./style.css";
 function LessonPage() {
   return (
     <div>
+        Lesson Page
     </div>
   );
 }
