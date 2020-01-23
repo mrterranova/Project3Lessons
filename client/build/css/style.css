@@ -1,0 +1,83 @@
+* {
+    background: cover;
+}
+
+body {
+    background-color: rgb(226, 214, 192);
+}
+
+/* Header CSS */
+.jumbotron-fluid {
+    background-color: rgb(28, 0, 58);
+}
+
+
+/* Footer CSS */
+.footer-div {
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+}
+.github-icon {
+    max-height: 40px;
+    position: absolute;
+    right: 70px;
+}
+
+/* About CSS */
+.inside-jumbotron-container {
+    color: rgb(226, 214, 192);
+    display: flex; 
+    justify-content: center;
+}
+
+.google-logo-image {
+    max-height: 100px;
+    float: left;
+}
+
+.jumbotron-about-text-container {
+    float: left;
+    font-size: 80px;
+    margin-left: 30px;
+}
+
+.about-jumbotron {
+    background: none;
+    text-align: center;
+}
+
+/* Search CSS */
+.form-control {
+    width: 50%;
+}
+.form-jumbotron {
+    display: flex;
+    justify-content: center;
+}
+.search-submit-btn {
+    margin-left: 20px;
+}
+
+.list-group-item {
+    background-color: rgb(226, 214, 192);
+}
+.information-search-div {
+    float: right;
+    margin-right: 10%;
+    width: 70%;
+}
+.bookPictures {
+    padding: 10px;
+}
+#add-book-image {
+    width: 60px;
+}
+#addBook {
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+}
