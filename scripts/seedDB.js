@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 const db = require("../models");
 
-// This file empties the Books collection and inserts the books below
+// This file empties the User collection and inserts the Users below
 
 mongoose.connect(
   process.env.MONGODB_URI
 );
 
 
-db.Book
+db.User
   .remove({})
-  .then(() => db.Book.collection.insertMany(bookSeed))
+  .then(() => db.User.collection.insertMany(UserSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

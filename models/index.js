@@ -1,5 +1,5 @@
 module.exports = {
-  User: require("./user"), 
+  User: require("./User"), 
   Curator: require("./curator"), 
   Lessons: require("./lessons"), 
   Admin: require("./admin"), 
