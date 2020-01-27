@@ -1,67 +1,65 @@
-// const mongoose = require('mongoose');
-// const crypto = require('crypto');
-// const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose')
+const crypto = require('crypto')
 
-// const { Schema } = mongoose;
+//user schema
+const userSchema = new mongoose.Schema({ 
+    name: { 
+        type: String, 
+        trim: true, 
+        required: true, 
+        max: 32
+    }, 
+    email: { 
+        type: String, 
+        trim: true, 
+        required: true,
+        unique: true, 
+        lowercase: true
+    }, 
+    hashed_password: { 
+        type: String,
+        required: true, 
+    }, 
+    salt: String, 
+    role: { 
+        type: String, 
+        default: 'user'
+    }, 
+    resetPasswordLink: {
+        data: String, 
+        default: ''
+    }
+    }, { timestamps : true })
 
-// const UsersSchema = new Schema({
-//   email: String,
-//   hash: String,
-//   salt: String,
-// });
-
-// UsersSchema.methods.setPassword = function(password) {
-//   this.salt = crypto.randomBytes(16).toString('hex');
-//   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-// };
-
-// UsersSchema.methods.validatePassword = function(password) {
-//   const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-//   return this.hash === hash;
-// };
-
-// UsersSchema.methods.generateJWT = function() {
-//   const today = new Date();
-//   const expirationDate = new Date(today);
-//   expirationDate.setDate(today.getDate() + 60);
-
-//   return jwt.sign({
-//     email: this.email,
-//     id: this._id,
-//     exp: parseInt(expirationDate.getTime() / 1000, 10),
-//   }, 'secret');
-// }
-
-// UsersSchema.methods.toAuthJSON = function() {
-//   return {
-//     _id: this._id,
-//     email: this.email,
-//     token: this.generateJWT(),
-//   };
-// };
-
-// mongoose.model('Users', UsersSchema);
-
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({ 
-  name: {
-    type: String, 
-    required: true
-  }, 
-  email: { 
-    type: String, 
-    required: true
-  }, 
-  password : { 
-    type: String, 
-    required: true
-  }, 
-  date: { 
-    type: Date, 
-    default: Date.now
-  }
+//virtual 
+userSchema.virtual('password')
+.set(function(password){
+    this._password = password
+    this.salt = this.makeSalt()
+    this.hashed_password = this.encryptPassword(password)
+})
+.get(function() {
+    return this._password
 })
 
-module.exports = User = mongoose.model("users", UserSchema)
+//methods
+userSchema.methods = {
+    authenticate: function(plainText) { 
+        return this.encryptPassword(plainText) === this.hashed_password; 
+    },
+    encryptPassword : function(password) {
+        if (!password) return ""
+        try { 
+            return crypto.createHmac('sha1', this.salt)
+            .update(password)
+            .digest('hex')
+        } catch (err) {
+            return ""
+        }
+    }, 
+    makeSalt: function() { 
+        return Math.round(new Date().valueOf() * Math.random())+""
+    }
+}
+
+module.exports = mongoose.model("User", userSchema)
