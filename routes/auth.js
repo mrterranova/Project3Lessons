@@ -1,26 +1,15 @@
-const jwt = require('express-jwt');
+const express = require('express')
+const router = express.Router();
 
-const getTokenFromHeaders = (req) => {
-  const { headers: { authorization } } = req;
+//import controller
+const { signup, accountActivation, signin } = require('../controllers/auth')
 
-  if(authorization && authorization.split(' ')[0] === 'Token') {
-    return authorization.split(' ')[1];
-  }
-  return null;
-};
+//import validators
+const { userSignupValidator, userSigninValidator } = require('../validators/auth')
+const { runValidation } = require('../validators')
 
-const auth = {
-  required: jwt({
-    secret: 'secret',
-    userProperty: 'payload',
-    getToken: getTokenFromHeaders,
-  }),
-  optional: jwt({
-    secret: 'secret',
-    userProperty: 'payload',
-    getToken: getTokenFromHeaders,
-    credentialsRequired: false,
-  }),
-};
+router.post( '/signup', userSignupValidator, runValidation, signup );
+router.post( '/activation', accountActivation );
+router.post( '/signin', userSigninValidator, runValidation, signin );
 
-module.exports = auth;
+module.exports = router;
