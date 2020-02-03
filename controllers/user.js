@@ -1,8 +1,12 @@
 const User = require('../models/user')
+const Notes = require("../models/Notes")
+const Bookmarked = require('../models/Bookmarked')
 
 exports.read = (req, res) => {
-
-    User.findOne({ _id: req.params.id }).exec((err, user) => {
+    User.findOne({ _id: req.params.id })
+    .populate("notes")
+    .populate("bookmarks")
+    .exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: 'User not located'
@@ -90,7 +94,7 @@ exports.getAll = (req, res) => {
 exports.updateAdmin = (req, res) => {
     const { name, password } = req.body;
 
-    User.findOne({ _id: req.user._id }, (err, user) => {
+    User.findOne({ _id: req.body._id }, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: 'User not located'
@@ -129,7 +133,7 @@ exports.updateAdmin = (req, res) => {
 }
 
 exports.deleteUserByAdmin = (req, res) => {
-    User.delete({ _id: req.user.id}, err => {
+    User.delete({ _id: req.body.id}, err => {
         if (err) {
             return res(400).json({
                 error: 'You are unable to delete this user'
@@ -137,3 +141,4 @@ exports.deleteUserByAdmin = (req, res) => {
         } 
     })
 }
+

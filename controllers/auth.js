@@ -3,6 +3,8 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const expressJwt = require("express-jwt")
 const _ = require('lodash')
+const { OAuth2Client } = require('google-auth-library')
+const fetch = require('node-fetch')
 
 const sendgridMail = require("@sendgrid/mail")
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY)
@@ -185,13 +187,13 @@ exports.updatePassword = (req, res) => {
             from: process.env.EMAIL_FROM,
             to: email,
             subject: `Password Reset link`,
-            html:  '<h1>From Words of Glory at No Limits Ministries: </h1>' +
-            '<p>To reset your password, please use the following link:</p>' +
-            '<br/>' +
-            '<p><a href="'+ process.env.CLIENT_URL +'/auth/password/reset/' + token + '">CLICK HERE TO ACTIVATE LINK</a></p>' +
-            '<hr />' +
-            '<p>This email may contain sensitive information</p>' +
-            '<p>' + process.env.CLIENT_URL + '</p>'
+            html: '<h1>From Words of Glory at No Limits Ministries: </h1>' +
+                '<p>To reset your password, please use the following link:</p>' +
+                '<br/>' +
+                '<p><a href="' + process.env.CLIENT_URL + '/auth/password/reset/' + token + '">CLICK HERE TO ACTIVATE LINK</a></p>' +
+                '<hr />' +
+                '<p>This email may contain sensitive information</p>' +
+                '<p>' + process.env.CLIENT_URL + '</p>'
         };
 
         return user.updateOne({ resetPasswordLink: token }, (err, success) => {
@@ -206,7 +208,7 @@ exports.updatePassword = (req, res) => {
                     .then(sent => {
                         // console.log('SIGNUP EMAIL SENT', sent)
                         return res.json({
-                            message: 'Email has been sent to '+email+'. Follow the instruction to activate your account'
+                            message: 'Email has been sent to ' + email + '. Follow the instruction to activate your account'
                         });
                     })
                     .catch(err => {
@@ -224,7 +226,7 @@ exports.resetPassword = (req, res) => {
     const { resetPasswordLink, newPassword } = req.body;
 
     if (resetPasswordLink) {
-        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function(err, decoded) {
+        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function (err, decoded) {
             if (err) {
                 return res.status(400).json({
                     error: 'This Link has expired'
@@ -258,4 +260,96 @@ exports.resetPassword = (req, res) => {
             });
         });
     }
+};
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+exports.googleLogin = (req, res) => {
+    const { idToken } = req.body;
+
+    client.verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID }).then(response => {
+        // console.log('GOOGLE LOGIN RESPONSE',response)
+        const { email_verified, name, email } = response.payload;
+        if (email_verified) {
+            User.findOne({ email }).exec((err, user) => {
+                if (user) {
+                    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '14d' });
+                    const { _id, email, name, role } = user;
+                    return res.json({
+                        token,
+                        user: { _id, email, name, role }
+                    });
+                } else {
+                    let password = email + process.env.JWT_SECRET;
+                    user = new User({ name, email, password });
+                    user.save((err, data) => {
+                        if (err) {
+                            console.log('ERROR WITH GOOGLE LOGIN', err);
+                            return res.status(400).json({
+                                error: 'Google can not login user currently'
+                            });
+                        }
+                        const token = jwt.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '14d' });
+                        const { _id, email, name, role } = data;
+                        return res.json({
+                            token,
+                            user: { _id, email, name, role }
+                        });
+                    });
+                }
+            });
+        } else {
+            return res.status(400).json({
+                error: 'Google login has failed. Please try again.'
+            });
+        }
+    });
+};
+
+exports.facebookLogin = (req, res) => {
+    const { userID, accessToken } = req.body;
+
+    const url = 'https://graph.facebook.com/v2.11/'+userID+'/?fields=id,name,email&access_token='+accessToken;
+
+    return (
+        fetch(url, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            // .then(response => console.log(response))
+            .then(response => {
+                const { email, name } = response;
+                User.findOne({ email }).exec((err, user) => {
+                    if (user) {
+                        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '14d' });
+                        const { _id, email, name, role } = user;
+                        return res.json({
+                            token,
+                            user: { _id, email, name, role }
+                        });
+                    } else {
+                        let password = email + process.env.JWT_SECRET;
+                        user = new User({ name, email, password });
+                        user.save((err, data) => {
+                            if (err) {
+                                console.log('error saving user', err);
+                                return res.status(400).json({
+                                    error: 'Login failed with facebook'
+                                });
+                            }
+                            const token = jwt.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '14d' });
+                            const { _id, email, name, role } = data;
+                            return res.json({
+                                token,
+                                user: { _id, email, name, role }
+                            });
+                        });
+                    }
+                });
+            })
+            .catch(error => {
+                res.json({
+                    error: 'Login through Facebook failed. Please try again'
+                });
+            })
+    );
 };
