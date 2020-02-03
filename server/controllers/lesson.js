@@ -14,7 +14,9 @@ exports.readLessons = (req, res) => {
 }
 
 exports.readLesson = (req, res) => {
-    Lessons.findOne({ _id: req.params.id }).exec((err, lesson) => {
+    Lessons.findOne({ _id: req.params.id })
+    .populate("curatorNotes")
+    .exec((err, lesson) => {
         if (err) {
             return res.status(422).json({
                 error: 'This lesson was not located'
@@ -25,6 +27,9 @@ exports.readLesson = (req, res) => {
 }
 
 exports.postLesson = (req, res) => {
+    console.log("POST IT")
+    console.log(req.body)
+    
     Lessons.create(req.body, (err, lesson) => {
         if (err) {
             return res.status(422).json({

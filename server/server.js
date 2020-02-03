@@ -23,6 +23,7 @@ mongoose.connect(process.env.DATABASE, {
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const lessonRoutes = require('./routes/lessons')
+const notesRoutes = require('./routes/notes')
 
 //app middlewares
 app.use(morgan('dev'));
@@ -34,6 +35,7 @@ app.use(cors());
 app.use('/api', authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
+app.use("/api", notesRoutes);
 
 
 //PORT 

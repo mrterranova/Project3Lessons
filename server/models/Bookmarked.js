@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 //create new instance of schema for bookmarked
 const bookmarkedSchema = new Schema({
     // following fields included
-  userName: { 
+  User_id: { 
       type: String, 
       required: true 
     }, 
-  lessonSaved: { 
+  Lesson_id: { 
       type: String, 
       required: false 
     }, 
@@ -24,7 +24,7 @@ const bookmarkedSchema = new Schema({
 });
 
 // create bookmarked datatable
-const Bookmarked = mongoose.model("Bookmarked", bookmarkedSchema);
+const Bookmarked = mongoose.model("Bookmark", bookmarkedSchema);
 
 // export model
 module.exports = Bookmarked;

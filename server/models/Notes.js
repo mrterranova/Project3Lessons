@@ -5,6 +5,14 @@ const Schema = mongoose.Schema;
 //create new schema for notes
 const notesSchema = new Schema({
     // following fields included
+  Lesson_id: {
+      type: String, 
+      required: true
+  },
+  User_id: {
+      type: String, 
+      required: true
+  },
   category: {
       type: String, 
       required: true 
@@ -24,7 +32,7 @@ const notesSchema = new Schema({
 });
 
 // create notes datatable
-const Notes = mongoose.model("Lessons", notesSchema);
+const Notes = mongoose.model("Note", notesSchema);
 
 // export model
 module.exports = Notes;

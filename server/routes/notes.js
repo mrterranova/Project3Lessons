@@ -19,21 +19,21 @@ const {
         updateBookmark, 
         deleteBookmark
 
-        } = require('../controllers/lesson')
+    } = require('../controllers/notes')
 
 //notes routes
-// router.get('/user/notes', readNotes ); 
-// router.get('/user/note/:id', readNote); 
-// router.post('/user/note/:id', requireSignin, postNote ); 
-// router.put('/user/note/:id', requireSignin, updateNote ); 
-// router.delete('user/note/:id', requireSignin, deleteNote ); 
+router.get('/notes', requireSignin, readNotes ); 
+router.get('/notes/:id', requireSignin, readNote); 
+router.post('/user/note/:id', requireSignin, postNote ); 
+router.put('/notes/:id', requireSignin, updateNote ); 
+router.delete('/notes/:id', requireSignin, deleteNote ); 
 
-//
-router.get( '/user/bookmarks', readBookmarks ); 
-router.get( '/user/bookmarks/:id', readBookmark ); 
-router.post( '/signin/:id', requireSignin, postBookmark ); 
-// router.put( '/user/bookmarks/:id', requireSignin, updateBookmark ); 
-// router.delete( '/user/bookmarks/:id', requireSignin, deleteBookmark ); 
+//bookmark routes
+router.get( '/bookmarks', requireSignin, readBookmarks ); 
+router.get( '/bookmarks/:id', requireSignin, readBookmark ); 
+router.post( '/user/bookmarks/:id', requireSignin, postBookmark); 
+router.put( '/bookmarks/:id', requireSignin, updateBookmark ); 
+router.delete( '/bookmarks/:id', requireSignin, deleteBookmark ); 
 
 
 //export the router with attached routes 

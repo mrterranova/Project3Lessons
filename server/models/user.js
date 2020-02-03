@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema({
     },
     notes: [{
         type: mongoose.Schema.Types.ObjectId, 
-        ref: "Notes"
+        ref: "Note"
     }],
     bookmarks: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Bookmarked"
+        ref: "Bookmark"
     }],
     hashed_password: { 
         type: String,

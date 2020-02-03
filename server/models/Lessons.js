@@ -25,10 +25,6 @@ const lessonsSchema = new Schema({
     type: String, 
     required: false 
   },
-  notes: [{
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Notes'
-  }],
   curatorNotes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Curator'
