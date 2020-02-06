@@ -3,7 +3,7 @@ import './Draft.css'
 import { EditorState, convertToRaw, ContentState, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg'; 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import {stateToHTML} from 'draft-js-export-html';
+// import {stateToHTML} from 'draft-js-export-html';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 
@@ -48,8 +48,6 @@ class PracticeDraft extends Component {
       };
     
       render() {
-
-        const content = window.localStorage.getItem('content');
 
         const { editorState } = this.state;
         return (

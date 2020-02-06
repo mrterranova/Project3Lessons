@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import "../style.css"
 import 'draft-js/dist/Draft.css'
-import axios from 'axios';
+// import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { isAuth, getCookie } from '../../../../auth/helpers';
-import { convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import { getCookie } from '../../../../auth/helpers';
+// import { convertToRaw } from 'draft-js';
+// import draftToHtml from 'draftjs-to-html';
 
 class DraftLesson extends React.Component {
   constructor(props) {
