@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Layout from '../core/Layout';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -46,7 +46,6 @@ const UserNotes = ({ history }) => {
                 if (response.data.notes.length === 0) {
                     //if the user has notes identify if there are notes that belong to this lesson
                 } else {
-                    const user = response.data._id
                     response.data.notes.map(note => {
                         if (note.Lesson_id === URL_id[0]) {
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Layout from '../core/Layout';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -8,7 +8,6 @@ import './style.css'
 
 const UserBookmark = ({ history }) => {
     const [values, setValues] = useState({
-        lessonName:"",
         UserId: "",
         LessonId: "",
         BookmarkId: "", 
@@ -17,20 +16,13 @@ const UserBookmark = ({ history }) => {
 
     const token = getCookie('token');
 
-    useEffect(() => {
-        loadProfile();
-    }, []);
-
-    const handleChange = (name) => event => {
-        setValues({ ...values, lesson_title: lessonName,  [name]: event.target.value })
-    }
-
+    
     const loadProfile = () => {
         //grabbing the URL from the window
         const URLarray = window.document.URL.split("/")
         const URLarrVar = URLarray[URLarray.length - 1]
         const URL_id = URLarrVar.split("?")
-
+        
         //GET the correct logged user
         axios({
             method: 'GET',
@@ -51,11 +43,16 @@ const UserBookmark = ({ history }) => {
                         }
                     })
                 }
-
+                
             })
-    };
+        };
+        
+        useEffect(() => {
+            loadProfile();
+        }, []);
 
-    const { BookmarkId, isBookmarked, lessonName,  } = values;
+
+    const { BookmarkId, isBookmarked } = values;
 
     //handle all edits to the bookmark as a POST
     const postBookmark = () => {
@@ -76,8 +73,6 @@ const UserBookmark = ({ history }) => {
                     url:process.env.REACT_APP_API+'/lesson/'+URL_id
                 }).then( res => {
                     const lessonTitle = res.data.title
-
-                    console.log(lessonTitle, URL_id[0], userId)
                     axios({
                         method: "POST",
                         url: process.env.REACT_APP_API + '/user/bookmarks/' + URL_id[0],
@@ -86,28 +81,57 @@ const UserBookmark = ({ history }) => {
                         },
                         data: { User_id: userId, lesson_title: lessonTitle}
                     }).then(response => {
-                        console.log("YOU ARE NOW IN BOOKMARK")
-                        console.log(response)
+                        setValues({ isBookmarked: true})
+
                     })
                 })
             })
     }
 
+    const deleteBookmark = () => {
+            axios({
+                method: 'DELETE',
+                url: `${process.env.REACT_APP_API}/bookmarks/` + BookmarkId,
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+                .then(response => {
+                    setValues({ isBookmarked: false})
+                });
+    }
+
     function Image() {
         if (isBookmarked) {
-            console.log('you made it',isBookmarked)
             return <img src={'/images/bookmark-ribbon.png'} id="bookmark-lesson" alt="bookmark"/>
         } else {
-            console.log('nope', isBookmarked)
             return ""
         }
     }
 
+    function BookmarkButton() {
+        if (isBookmarked) {
+            return ""
+        } else {
+            return <div id="btn-bookmark" onClick={()=>postBookmark()}>Bookmark</div>
+        }
+    }
+
+    function RemoveBookmark() {
+        if (isBookmarked) {
+            return <button id="btn-removeBookmark" onClick={()=>deleteBookmark()}>Remove</button>
+        } else {
+            return ""
+        }
+    }
+
+
     // what the user is viewing
     return (
         <div>
-        <div id="btn-bookmark" onClick={()=>postBookmark()}>Bookmark</div>
-        <div classname="bookmark-container" style={{width:'100px', height:'250px', backgroundColor:"red", position:'absolute', marginLeft:'80%', marginTop:'-100px'}}>
+            <BookmarkButton />
+            <RemoveBookmark />
+                <div id="bookmark-container">
             <Image />
             </div>
         </div>

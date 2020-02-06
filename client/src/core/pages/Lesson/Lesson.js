@@ -54,7 +54,7 @@ class Lesson extends Component {
       }).then(res => {
         return (
           <Fragment>
-          <div classname="verse-reference"><strong>
+          <div classname="verse-reference" key={res.data.text}><strong>
             {res.data.reference}</strong></div>
             <div classname="verse-text"><i>{res.data.text}</i></div>
             <br/>
@@ -70,9 +70,11 @@ class Lesson extends Component {
   render() {
     return (
       <div>
+        {isAuth() && (
+          <Bookmarked />
+            )}
         <Layout />
             <button id="btn-scriptures" onClick={() => { this.handleModal() }}>Scriptures</button>
-        <Bookmarked />
         <h2>{this.state.lesson.title}</h2>
         <div className="main"></div>
         <div className="backLessonNav"></div>

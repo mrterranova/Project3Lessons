@@ -4,7 +4,7 @@
   }
 @font-face {
     font-family: gabriele;
-    src: url('/fonts/gabriele.ttf');
+    src: url('/fonts/Gabrielle.ttf');
   }
 
 .lessonNav {
@@ -35,7 +35,7 @@ background-color: #ecdfec;
 border: none;
 border-radius: 50px;
 height: 50px;
-color: rgb(0, 0, 0);
+color: rgb(2, 2, 53);
 font-size: 2rem;
 font-family: gabriele;
 text-align: center;
@@ -43,7 +43,7 @@ transition: text-shadow 1s;
 text-shadow: 4px 4px 15px rgb(0, 251, 255);
 transition: color 1s;
 -webkit-text-stroke-width: 1px;
--webkit-text-stroke-color: rgb(2, 2, 49);
+-webkit-text-stroke-color: rgb(55, 41, 126);
 position: absolute;
 margin-top: 200px;
 margin-left: 50px;
@@ -60,7 +60,7 @@ z-index: 1;
     border: none;
     border-radius: 50px;
     height: 50px;
-    color: rgb(0, 0, 0);
+    color: rgb(2, 2, 53);
     font-size: 2rem;
     font-family: gabriele;
     text-align: center;
@@ -68,7 +68,7 @@ z-index: 1;
     text-shadow: 4px 4px 15px rgb(0, 251, 255);
     transition: color 1s;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgb(2, 2, 49);
+    -webkit-text-stroke-color: rgb(55, 41, 126);
     position: absolute;
     z-index: 2;
     margin-top: 300px;
@@ -76,8 +76,7 @@ z-index: 1;
     }
 #btn-bookmark:hover {
         color: #fff;
-        text-shadow: 4px 4px 10px rgb(2, 2, 53);
-    
+        text-shadow: 4px 4px 10px rgb(2, 2, 53); 
 }
 .lessonDisplay {
     margin-left: 35%;
@@ -108,6 +107,43 @@ max-width: 70px;
 .handle {
     cursor: all-scroll;
 }
+#bookmark-container {
+    width:100px; 
+    height:250px; 
+    position:absolute;
+    margin-left: 80%;
+}
 #bookmark-lesson {
-    max-height: 100px;
+    max-height: 500px;
+    margin-top: -300px;
+    animation-name: ribbonTransition;
+    animation-duration: 2s;
+}
+@keyframes ribbonTransition {
+    0% { transform: translateY(-500px);}
+    100% { transform: skewY(-350px);}
+}
+#btn-removeBookmark {
+    width: 150px;
+    background-color: #ecdfec;
+    border: none;
+    border-radius: 50px;
+    height: 50px;
+    color: rgb(23, 11, 63);
+    font-size: 2rem;
+    font-family: gabriele;
+    text-align: center;
+    transition: text-shadow 1s;
+    text-shadow: 4px 4px 15px rgb(0, 251, 255);
+    transition: color 1s;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(55, 41, 126);
+    position: absolute;
+    z-index: 2;
+    margin-top: 300px;
+    margin-left: 50px;
+}
+#btn-removeBookmark:hover {
+    color: #fff;
+    text-shadow: 4px 4px 10px rgb(2, 2, 53); 
 }
