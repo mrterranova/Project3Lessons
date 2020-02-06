@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { isAuth, getCookie } from '../../../auth/helpers';
-import { Card,Button } from 'react-bootstrap'
+import { Card, Accordion } from 'react-bootstrap'
 
 
 const UserNotes = ({ history }) => {
@@ -43,7 +43,6 @@ const UserNotes = ({ history }) => {
         })
             .then(response => {
                 //set all the values of the user
-                console.log("URLid", URL_id[0])
                 if (response.data.notes.length === 0) {
                     //if the user has notes identify if there are notes that belong to this lesson
                 } else {
@@ -56,36 +55,10 @@ const UserNotes = ({ history }) => {
                         }
                     })
                 }
-                // //if the user has 0 bookmarks return nothing
-                // if (response.data.bookmarks.length === 0) {
-                //     console.log("Lesson was not bookmarked")
-                //     //if the user has bookmarks identify if there are bookmarks that belong to this lesson
-                // } else {
-                //     response.data.bookmarks.map( bookmark => {
-                //         if (response.data.bookmark.Lesson_id === LessonId) {
-                //             setValues({ ...values, bookcategory: bookmark.category, isBookmarked: true, UserId: response.data._id})
-                //             //bookmakrs that belong to this lesson are reported in console.
-                //         }
-                //     })
-                // }
-
             })
     };
 
     const { NoteId, title, category, body, bookcategory } = values;
-
-    const RemoveNote = (Note_id) => {
-        axios({
-            method: 'DELETE',
-            url: `${process.env.REACT_APP_API}/notes/` + Note_id,
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        })
-            .then(response => {
-                console.log('Note was deleted', response);
-            });
-    }
 
     //handle all edits to the notes as a POST
     const handleSubmitEdit = () => {
@@ -101,7 +74,6 @@ const UserNotes = ({ history }) => {
         })
             .then(response => {
                 const userId = response.data._id
-                alert(userId)
                 axios({
                     method: "POST",
                     url: process.env.REACT_APP_API + '/user/note/' + URL_id[0],
@@ -110,20 +82,8 @@ const UserNotes = ({ history }) => {
                     },
                     data: { Lesson_id: URL_id[0], title: title, category: category, body: body, User_id: userId, _id: NoteId }
                 }).then(response => {
-                    console.log(title, body, category)
-                    alert("Never stop!")
                 })
             })
-    }
-
-    //toggle to show notes
-    const getUserNote = () => {
-        console.log("You are looking for the notes!")
-    }
-
-    //toggle to addBookmark
-    const addBookmark = () => {
-        console.log("Bookmark time!")
     }
 
     //form for handling the note changes
@@ -131,28 +91,42 @@ const UserNotes = ({ history }) => {
 
         return (
         <form>
-            <Card style={{ width: '18rem' }}>
-            <Card.Body>
-            <Card.Title>
                     <input placeholder={"Title: " + title} onChange={handleChange('title')} type="text" name="title" className="form-control" id="title"></input>
-              </Card.Title>
-              <Card.Text>
                     <input placeholder={"Category: " + category} onChange={handleChange('category')} name="category" type="text" className="form-control" id="category"></input>
                     <textarea className='note-textbox' onChange={handleChange('body')} id="bodyNotes" name="body" placeholder={noteBody.body}></textarea>
                     <br />
-                    <button className="btn btn-warning" onClick={() => handleSubmitEdit()} type="submit">Submit Edit</button>
-              </Card.Text>
-                <button type="button" className="btn btn-warning deleteNote-btn" onClick={() => RemoveNote()}>Delete Note</button>
-            </Card.Body>
-          </Card>
+                    <button className="btn btn-warning" onClick={() => handleSubmitEdit()} type="submit">Save Changes</button>
         </form>
         )
     }
     // what the user is viewing
     return (
-            <div className="noteContainer">
-                {takeNotes({ body })}
-            </div>
+<Accordion defaultActiveKey="0" style={{ width: '24rem'}}>
+  <Card>
+    <Accordion.Toggle as={Card.Header} eventKey="0">
+      View Notes
+    </Accordion.Toggle>
+    <Accordion.Collapse eventKey="0">
+      <Card.Body>
+        <div>
+            <h4>{title}</h4>
+    <p><i>Self-Categorized Topic:  {category}</i></p>
+            <p>{body}</p>
+        </div>
+      </Card.Body>
+    </Accordion.Collapse>
+  </Card>
+  <Card>
+    <Accordion.Toggle as={Card.Header} eventKey="1">
+      Take Notes
+    </Accordion.Toggle>
+    <Accordion.Collapse eventKey="1">
+      <Card.Body>
+          {takeNotes({ body })}
+        </Card.Body>
+    </Accordion.Collapse>
+  </Card>
+</Accordion>
     );
 };
 

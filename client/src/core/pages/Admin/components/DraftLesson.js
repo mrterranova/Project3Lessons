@@ -6,6 +6,8 @@ import 'draft-js/dist/Draft.css'
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { isAuth, getCookie } from '../../../../auth/helpers';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 class DraftLesson extends React.Component {
   constructor(props) {
@@ -19,7 +21,6 @@ class DraftLesson extends React.Component {
         body: "", 
         title: "",
         keyTerms: ""
-
     };
 
     // axios({

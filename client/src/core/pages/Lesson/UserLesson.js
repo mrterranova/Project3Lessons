@@ -1,92 +1,32 @@
-// import React, {Component} from "react"
-// import ReactDOM from "react-dom"
-// import DnR from '../../components/DnR'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import Draggable, {DraggableCore} from 'react-draggable';
+import UserOptions from './UserOptions'
 
-// const paneStyle = {
-// 	width: '80%',
-// 	height: '50%',
-// 	top: '25%',
-// 	left: '10%',
-// 	backgroundColor: 'rgba(0, 0, 0, 0.2)'
-// }
+class UserLesson extends Component {
 
-// const buttonStyle = {
-// 		paddingLeft: 10,
-// 		textAlign: 'center'
-// }
+    eventLogger = (e: MouseEvent, data: Object) => {
+      };
 
-// class UserLesson extends Component{
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       minimize: false
-//     }
-// 	}
-// 	render() {
-// 		return (
-// 			<div style={{
-// 				background:'#3a7bd5',
-// 				top: 0,
-// 				left : 0,
-// 				width: '100%',
-// 				height: '100%',
-//         position: 'fixed',
-// 			}}>
-// 				<div style={{
-// 					display: 'flex',
-// 					alignItems: 'center',
-// 					verticalAlign: 'baseline',
-// 					padding: 10,
-// 				}}>
-// 					<button
-// 						style={buttonStyle}
-// 						onClick={()=>this.refs.dnr.minimize()}>
-// 						minimize
-// 					</button>
-// 					<button
-// 						style={buttonStyle}
-// 						onClick={()=>this.refs.dnr.maximize()}>
-// 						maximize
-// 					</button>
-// 					<button
-// 						style={buttonStyle}
-// 						onClick={()=>this.refs.dnr.restore()}>
-// 						restore
-// 					</button>
-// 				</div>
-// 				<DnR
-// 					ref='dnr'
-// 					{...this.Windows}
-// 					cursorRemap={(c) => c === 'move' ? 'default' : null}
-// 					style={paneStyle}>
-// 					<button
-// 						onClick={()=>this.refs.subdnr.minimize()}>
-// 						minimize
-// 					</button>
-// 					<button
-// 						onClick={()=>this.refs.subdnr.transform({
-// 							top: 0,
-// 							left: 0,
-// 							width: this.refs.dnr.getFrameRect().width,
-// 							height: this.refs.dnr.getFrameRect().height})}>
-// 						maximize
-// 					</button>
-// 					<button
-// 						onClick={()=>this.refs.subdnr.restore()}>
-// 						restore
-// 					</button>
-// 					<DnR
-// 						ref='subdnr'
-// 						{...this.OSX}
-// 						cursorRemap={(c) => c === 'move' ? 'default' : null}
-// 						style={paneStyle}
-// 						boundary={{top: 0}}>
-// 						content
-// 					</DnR>
-// 				</DnR>
-// 			</div>
-// 		)
-// 	}
-// }
+    render() {
+        return (
+          <Draggable
+            handle=".handle"
+            defaultPosition={{x: 100, y: 300}}
+            position={null}
+            grid={[25, 25]}
+            onStart={this.handleStart}
+            onDrag={this.handleDrag}
+            onStop={this.handleStop}>
+                <div className="notesContainer" style={{position:'absolute', zIndex:'3'}}>
+                <div className="handle" style={{width:'24rem', backgroundColor:'#cccc', height: '2rem'}}></div>
+                <UserOptions />
+                </div>
+          </Draggable>
+        );
+      }
+}
 
-// export default UserLesson
+ReactDOM.render(<UserLesson/>, document.getElementById("root"));
+
+export default UserLesson

@@ -147,6 +147,20 @@ color: beige;
     text-align: center;
 }
 .bookmark-date {
-    float:right;
-    margin-top: -25px;
+
+}
+.note-title {
+    width: 66rem;
+    color: rgb(31, 56, 56);
+}
+.note-date {
+ margin-right: 100px;
+ margin-top: -70px;
+ color: rgb(38, 56, 56);
+}
+.note-category:hover {
+text-decoration: none;
+}
+.note-category {
+    color: rgb(31, 56, 56);
 }

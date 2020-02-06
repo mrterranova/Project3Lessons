@@ -5,8 +5,9 @@ import { isAuth, getCookie, signout } from '../../../../../auth/helpers';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { List, ListNote } from "../../../../components/List";
 import { Link } from 'react-router-dom';
-import { toast, ToastType } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { Accordion, Card, Button } from 'react-bootstrap'
 
 
 
@@ -17,13 +18,13 @@ const UserNotes = ({ history }) => {
         category: "",
         body: "",
         _id: "",
-        isBookmarked: false, 
-        title : "", 
-        category: "", 
+        isBookmarked: false,
+        title: "",
+        category: "",
         body: ""
     });
 
-    
+
 
     const token = getCookie('token');
 
@@ -47,7 +48,7 @@ const UserNotes = ({ history }) => {
         })
             .then(response => {
                 const { role, name, email, notes, _id } = response.data;
-                setValues({ ...values, role, name, email, notes, _id});
+                setValues({ ...values, role, name, email, notes, _id });
             })
             .catch(error => {
                 if (error.response.status === 401) {
@@ -62,7 +63,7 @@ const UserNotes = ({ history }) => {
 
     //show notes in form
     const handleEditNotes = (noteTitle, noteCategory, noteBody, noteLink, noteDate, noteId) => {
-        handleChange(noteTitle,noteBody,noteCategory);
+        handleChange(noteTitle, noteBody, noteCategory);
         return (
             <Fragment>
                 <div>
@@ -71,11 +72,11 @@ const UserNotes = ({ history }) => {
                         <Link className="nav-link" to={'/lesson/' + noteLink}>Click to go to lesson...</Link>
                         <input placeholder={"Category: " + noteCategory} onChange={handleChange('category')} name="category" type="text" className="form-control" id="category"></input>
                         <textarea className='note-textbox' onChange={handleChange('body')} id="bodyNotes" name="body">{noteBody}</textarea>
-                        <div className='date'>Created on: {convertDate(noteDate)}</div>
-                        <button className="btn btn-warning" onClick={() => handleSubmitEdit(noteId, noteLink)} type="submit">Submit Edit</button>
+                        <div className='date' style={{paddingBottom: "50px"}}>Created on: {convertDate(noteDate)}</div>
+                        <button className="btn btn-info" onClick={() => handleSubmitEdit(noteId, noteLink)} type="submit" style={{float:'left', marginTop:'-30px'}}>Submit Edit</button>
+                        <button type="button" className="btn btn-danger deleteNote-btn" onClick={() => RemoveNote(noteId)} style={{float:'right', marginTop:'-30px'}}>Delete Note</button>
                     </form>
                 </div>
-                <button type="button" className="btn btn-warning deleteNote-btn" onClick={() => RemoveNote(noteId)}>Delete Note</button>
             </Fragment>
         )
     }
@@ -124,18 +125,20 @@ const UserNotes = ({ history }) => {
         })
             .then(response => {
                 console.log('Note was deleted', response);
-                toast.success('Note was Removed!');
+               let noteArr = values.notes.filter( note => note._id != Note_id )
+               console.log(noteArr)
+                setValues({ notes: noteArr})
             });
     }
 
     const handleSubmitEdit = (Note_id, lessonLink) => {
         axios({
             method: "PUT",
-            url: process.env.REACT_APP_API + '/notes/'+ Note_id,
+            url: process.env.REACT_APP_API + '/notes/' + Note_id,
             headers: {
                 Authorization: 'Bearer ' + token
             },
-            data: {title: title, category: category, body: body, Lesson_id: lessonLink, User_id: _id }
+            data: { title: title, category: category, body: body, Lesson_id: lessonLink, User_id: _id }
         }).then(response => {
             console.log(title, body, category)
             toast.success(`You have updated notes!`)
@@ -143,25 +146,38 @@ const UserNotes = ({ history }) => {
     }
 
     return (
-            <div className="container">
-                <h3 id="note-name-header"> {name}'s Notes </h3>
-                {notes.length ? (
+        <div className="container">
+            <h3 id="note-name-header"> {name}'s Notes </h3>
+            {notes.length ? (
 
-                    <List>
-                        {notes.map(note => (
-                            <ListNote key={note._id}>
-                                {
-                                handleEditNotes(note.title, note.category, note.body, note.Lesson_id, note.date, note._id)
-                                }
-                            </ListNote>
-                        ))}
-                    </List>
+                <List>
+                    {notes.map(note => (
+                        <Accordion>
+                            <Card style={{width:'66rem'}}>
+                                <Card.Header style={{height:'6rem'}}>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        <h3 className="note-title">{note.title}</h3>
+                                        <p className="note-category" >{note.category}</p>
+                                        <p className="note-date" >{convertDate(note.date)}</p>
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                    <ListNote key={note._id}>
+                                        {
+                                            handleEditNotes(note.title, note.category, note.body, note.Lesson_id, note.date, note._id)
+                                        }
+                                    </ListNote>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>
+                    ))}
+                </List>
                 ) : (
-                        <h3>You have no notes saved to your portfolio.</h3>
-                    )}
+                    <h3>You have no notes saved to your portfolio.</h3>
+                )}
 
-            </div>
-        );
-    };
+        </div>
+    );
+};
 
-    export default UserNotes;
+export default UserNotes;

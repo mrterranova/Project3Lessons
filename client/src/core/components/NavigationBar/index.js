@@ -18,6 +18,10 @@ const Layout = ({ children, match, history }) => {
                 <Link to="/" className="nav-link" style={isActive('/')}>Main</Link>
             </li>
 
+            <li className="nav-item">
+                <Link to="/lessons/all" className="nav-link" style={isActive('/lessons/all')}>Library</Link>
+            </li>
+
 
             <div className="navbar-btns nav-comp-logs">
             {!isAuth() &&
