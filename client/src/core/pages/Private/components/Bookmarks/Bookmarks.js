@@ -106,19 +106,21 @@ const UserNotes = ({ history }) => {
             }
         })
             .then(response => {
-                console.log('Bookmark deleted', response);
+                let bookmarkArr = values.bookmarks.filter( mark => mark._id !== Bookmark_id )
+                console.log(bookmarkArr)
+                 setValues({ bookmarks: bookmarkArr})
                     toast.success('Bookmark was Removed!');
                 });
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{overflow: 'auto'}}>
             <h3 id="note-name-header"> {name}'s Bookmarks </h3>
             {bookmarks.length ? (
                 <List>
                     {bookmarks.map(bookmark => (
                         <ListNote key={bookmark._id}>
-                            {handleEditBookmarks(bookmark.Lesson_id, bookmark.category, bookmark.date, bookmark._id)}
+                            {handleEditBookmarks(bookmark.Lesson_id, <div>{bookmark.lesson_title}</div>, bookmark.date, bookmark._id)}
                         </ListNote>
                     ))}
                 </List>

@@ -7,7 +7,6 @@ class ProfileContainer extends Component {
     constructor() {
         super();
         this.state = {
-            showHideNewPost: true,
             showHideNoteSection: false,
             showHideBookmarkSection: false
         }
@@ -41,7 +40,7 @@ class ProfileContainer extends Component {
 
     render() {
 
-        const { showHideNewPost, showHideNoteSection, showHideBookmarkSection } = this.state;
+        const { showHideNoteSection, showHideBookmarkSection } = this.state;
 
         return (
             <div>

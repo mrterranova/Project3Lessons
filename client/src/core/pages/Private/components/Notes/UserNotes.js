@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useCallback } from 'react';
 // import Layout from '../core/Layout';
 import axios from 'axios';
 import { isAuth, getCookie, signout } from '../../../../../auth/helpers';
@@ -19,25 +19,17 @@ const UserNotes = ({ history }) => {
         body: "",
         _id: "",
         isBookmarked: false,
-        title: "",
-        category: "",
-        body: ""
     });
 
 
 
     const token = getCookie('token');
 
-    useEffect(() => {
-        loadProfile();
-    }, []);
-
+    
     const handleChange = (name) => event => {
-        console.log(name)
         setValues({ ...values, title: title, category: category, body: body, [name]: event.target.value })
-        console.log(title, body, category)
     }
-
+    
     const loadProfile = () => {
         axios({
             method: 'GET',
@@ -46,19 +38,23 @@ const UserNotes = ({ history }) => {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(response => {
-                const { role, name, email, notes, _id } = response.data;
-                setValues({ ...values, role, name, email, notes, _id });
-            })
-            .catch(error => {
-                if (error.response.status === 401) {
-                    signout(() => {
-                        history.push('/');
-                    });
-                }
-            });
+        .then(response => {
+            const { role, name, email, notes, _id } = response.data;
+            setValues({ ...values, role, name, email, notes, _id });
+        })
+        .catch(error => {
+            if (error.response.status === 401) {
+                signout(() => {
+                    history.push('/');
+                });
+            }
+        });
     };
 
+    useEffect(() => {
+        loadProfile();
+    }, [loadProfile]);
+    
     const { name, notes, title, body, category, _id } = values;
 
     //show notes in form
@@ -111,6 +107,7 @@ const UserNotes = ({ history }) => {
                 break;
             case '12': return "Dec. " + dateyear;
                 break;
+            default: return "Sorry no date associated"
         }
 
     }
@@ -125,7 +122,7 @@ const UserNotes = ({ history }) => {
         })
             .then(response => {
                 console.log('Note was deleted', response);
-               let noteArr = values.notes.filter( note => note._id != Note_id )
+               let noteArr = values.notes.filter( note => note._id !== Note_id )
                console.log(noteArr)
                 setValues({ notes: noteArr})
             });

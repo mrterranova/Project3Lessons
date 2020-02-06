@@ -42,7 +42,7 @@ const UserNotes = ({ history }) => {
             });
     };
 
-    const { name, _id } = values;
+    const { _id } = values;
 
     const AreYouSure = () => {
         return(
@@ -73,7 +73,6 @@ const UserNotes = ({ history }) => {
     return (
         <div>
 <div onClick={()=>AreYouSure()}>Click here</div>
-{AreYouSure()}
 <ToastContainer />
 </div>
     );

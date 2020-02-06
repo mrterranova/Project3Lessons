@@ -17,10 +17,7 @@ const Settings = ({ history }) => {
 
     const token = getCookie('token');
 
-    useEffect(() => {
-        loadProfile();
-    }, []);
-
+    
     const loadProfile = () => {
         axios({
             method: 'GET',
@@ -29,20 +26,24 @@ const Settings = ({ history }) => {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(response => {
-                console.log('PRIVATE PROFILE UPDATE', response);
-                const { role, name, email } = response.data;
-                setValues({ ...values, role, name, email });
-            })
-            .catch(error => {
-                console.log('PRIVATE PROFILE UPDATE ERROR', error.response.data.error);
-                if (error.response.status === 401) {
-                    signout(() => {
-                        history.push('/');
-                    });
-                }
-            });
+        .then(response => {
+            console.log('PRIVATE PROFILE UPDATE', response);
+            const { role, name, email } = response.data;
+            setValues({ ...values, role, name, email });
+        })
+        .catch(error => {
+            console.log('PRIVATE PROFILE UPDATE ERROR', error.response.data.error);
+            if (error.response.status === 401) {
+                signout(() => {
+                    history.push('/');
+                });
+            }
+        });
     };
+    
+    useEffect(() => {
+        loadProfile();
+    }, [loadProfile]);
 
     const { role, name, email, password, btnText } = values;
 

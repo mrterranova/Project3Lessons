@@ -75,6 +75,7 @@ h2 {
 .bookmarkSection-tab:hover {
 color: beige;
 }
+
 .empty {
  border: none;
  background: none;
@@ -94,6 +95,7 @@ color: beige;
     width: 85%; 
     background-color: rgb(172,175,182);
     position: absolute;
+    overflow: auto;
     border-radius: 10px;
 }
 .profile-body {
@@ -141,10 +143,11 @@ color: beige;
     border-radius: 10px;
 }
 .bookmark-link {
-    float: left;
+    margin-top: 10px;
+    float: right;
 }
 .bookmark-category {
-    text-align: center;
+    font-weight: bold;
 }
 .bookmark-date {
 
