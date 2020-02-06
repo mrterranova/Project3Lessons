@@ -136,7 +136,7 @@ exports.postBookmark = (req, res) => {
     Bookmark.create({
         User_id: req.body.User_id,
         Lesson_id: req.params.id,
-        category: req.body.category
+        lesson_title: req.body.lesson_title
     })
         .then(function (dbBookmark) {
             return User.findOneAndUpdate({ _id: req.body.User_id },
