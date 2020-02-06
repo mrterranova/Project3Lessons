@@ -13,7 +13,7 @@ const bookmarkedSchema = new Schema({
       type: String, 
       required: false 
     }, 
-  category: { 
+  lesson_title: { 
       type: String, 
       required: true 
     },
