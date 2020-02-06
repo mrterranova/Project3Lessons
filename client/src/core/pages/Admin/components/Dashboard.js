@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Tabs, Tab } from 'react-bootstrap'; 
-import DraftLesson from './DraftLesson'
+// import DraftLesson from './DraftLesson'
 import DisplayLessons from '../../AllLessons/DisplayLessons'
 import PracticeDraft from './PracticeDraft'
 
@@ -15,11 +15,10 @@ class Dashboard extends Component {
       <DisplayLessons />
   </Tab>
   <Tab className="tab-style-draftLesson" eventKey="CreateLesson" title="Create Lesson">
-    <DraftLesson />
+    <PracticeDraft />
   </Tab>
   <Tab eventKey="Future Tab" title="Future Tab">
     <div style={{marginLeft: '3rem', width: '90%'}}>
-    <PracticeDraft />
     </div>
   </Tab>
 </Tabs>

@@ -81,3 +81,15 @@ h2 {
 .form-lesson-input-fields {
     width: 200%;
 }
+.editorState {
+    background-color: #fff;
+    height: 40vh;
+}
+.bodyText {
+    background-color: #fff;
+    float:right;
+    height:100%; 
+    width: 70%;
+    border: 2px solid rgb(34, 34, 34);
+    margin-right: 30px;
+}

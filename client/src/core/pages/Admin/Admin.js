@@ -40,8 +40,6 @@ const Private = ({ history }) => {
             });
     };
 
-    const {name } = values;
-
     return (
         <Layout>
             <Settings />
