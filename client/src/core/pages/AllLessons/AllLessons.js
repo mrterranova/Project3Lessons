@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import { List, ListNote } from '../../components/List'
-import { Link } from 'react-router-dom';
 import Layout from '../../components/NavigationBar/index';
 import DisplayLessons from './DisplayLessons';
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 // import { List, ListNote } from '../../components/List'
 import { Link } from 'react-router-dom';
 // import Layout from '../../components/NavigationBar/index';
-import Slider from 'react-animated-slider';
+// import Slider from 'react-animated-slider';
 import CardBlock from '../../components/CardBlock';
 import 'react-animated-slider/build/horizontal.css';
 import './style.css'
@@ -25,7 +25,6 @@ class AllLessons extends Component {
       url: `${process.env.REACT_APP_API}/lessons`,
     })
       .then(res => {
-        console.log(res.data)
         this.setState({ lessons: res.data })
       })
   };
@@ -37,9 +36,10 @@ class AllLessons extends Component {
         {this.state.lessons.length ? (
           <div>
             {this.state.lessons.map(lesson => (
-              <div className="card-container">
+              <div className="card-container" key={lesson._id}>
                 <Link className="nav-link" to={'/lesson/' + lesson._id}>
-                  <CardBlock key={lesson._id}
+                  <CardBlock 
+                  key={lesson._id}
                     link={lesson._id}
                     keyTerms={lesson.keyTerms}
                     title={lesson.title}
