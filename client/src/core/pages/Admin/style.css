@@ -60,8 +60,7 @@ h2 {
     border: 1px solid grey; 
     border-radius: 5px;
     width: 80%; 
-    height: 100vh;
-    overflow: auto;
+    overflow: scroll;
     padding: 20px;
     background-color: #fff;
 
@@ -83,13 +82,12 @@ h2 {
 }
 .editorState {
     background-color: #fff;
-    height: 40vh;
+    min-height: 40vh;
 }
 .bodyText {
     background-color: #fff;
     float:right;
-    height:100%; 
-    width: 70%;
+    width: 90%;
     border: 2px solid rgb(34, 34, 34);
     margin-right: 30px;
 }

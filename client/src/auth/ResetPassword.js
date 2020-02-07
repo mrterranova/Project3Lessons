@@ -17,11 +17,10 @@ const Reset = ({ match }) => {
     useEffect(() => {
         let token = match.params.token;
         let { name } = jwt.decode(token);
-        // console.log(name);
         if (token) {
             setValues({ ...values, name, token });
         }
-    }, []);
+    }, [values, match.params.token]);
 
     const { name, email, token, newPassword, buttonText } = values;
 
