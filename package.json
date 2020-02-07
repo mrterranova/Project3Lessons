@@ -6,7 +6,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
-    "start:dev":  "npm run client",
+    "start:dev": "npm run client",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
@@ -27,7 +27,8 @@
     "mongoose": "^5.8.9",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "serve": "^11.3.0"
   },
   "author": "",
   "license": "ISC"
