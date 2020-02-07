@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import Layout from '../core/Layout';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { isAuth, getCookie } from '../../../auth/helpers';
+import { getCookie, isAuth } from '../../../auth/helpers';
 import { Card, Accordion } from 'react-bootstrap'
 
 
@@ -34,9 +34,10 @@ const UserNotes = ({ history }) => {
         const URL_id = URLarrVar.split("?")
 
         //GET the correct logged user
+        if (token){
         axios({
             method: 'GET',
-            url: `${process.env.REACT_APP_API}/user/${isAuth()._id}`,
+            url: `${process.env.REACT_APP_API}/user/${isAuth}`,
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -56,6 +57,7 @@ const UserNotes = ({ history }) => {
                 }
             })
     };
+}
 
     const { NoteId, title, category, body, bookcategory } = values;
 
