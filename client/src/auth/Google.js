@@ -6,7 +6,7 @@ const Google = ({ informParent = f => f }) => {
     const responseGoogle = (response) => {
         axios({
             method: 'POST',
-            url: '/google-login',
+            url: '/api/google-login',
             data: { idToken: response.tokenId }
         }).then(res => {
             console.log('Google login success', res)
