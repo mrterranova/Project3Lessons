@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // import Layout from '../../components/NavigationBar/index';
 // import Slider from 'react-animated-slider';
 import CardBlock from '../../components/CardBlock';
-import 'react-animated-slider/build/horizontal.css';
+// import 'react-animated-slider/build/horizontal.css';
 import './style.css'
 
 
