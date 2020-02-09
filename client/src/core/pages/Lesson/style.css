@@ -13,11 +13,10 @@
     width: 200px;
     display: flex;
     justify-content: center;
-    background-color: thistle;
+    background-color: rgb(167, 170, 190);
     margin-left: 25px;
     border-radius: 25px;
     opacity: .5;
-
 }
 .lessonNav{
     position: absolute;
@@ -28,10 +27,18 @@
     margin-left: 25px;
     border-radius: 25px;  
 }
-
+.title-lesson{
+    text-align: center;
+    font-family: gabriele;
+    font-size: 80px;
+}
+.lessonDisplay {
+    font-family: specify;
+}
 #btn-scriptures {
 width: 150px;
-background-color: #ecdfec;
+/* background-color: #e4d0e4; */
+background:none;
 border: none;
 border-radius: 50px;
 height: 50px;
@@ -50,13 +57,14 @@ margin-left: 50px;
 z-index: 1;
 }
 #btn-scriptures:hover {
-    color: #fff;
+    /* color: #fff; */
     text-shadow: 4px 4px 10px rgb(2, 2, 53);
 
 }
 #btn-bookmark {
     width: 150px;
-    background-color: #ecdfec;
+    /* background-color: #e4d0e4; */
+    background:none;
     border: none;
     border-radius: 50px;
     height: 50px;
@@ -75,7 +83,7 @@ z-index: 1;
     margin-left: 50px;
     }
 #btn-bookmark:hover {
-        color: #fff;
+        /* color: #fff; */
         text-shadow: 4px 4px 10px rgb(2, 2, 53); 
 }
 .lessonDisplay {
@@ -125,7 +133,7 @@ max-width: 70px;
 }
 #btn-removeBookmark {
     width: 150px;
-    background-color: #ecdfec;
+    background: none;
     border: none;
     border-radius: 50px;
     height: 50px;

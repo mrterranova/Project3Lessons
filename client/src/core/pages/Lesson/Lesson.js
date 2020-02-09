@@ -22,6 +22,7 @@ class Lesson extends Component {
   componentDidMount() {
     this.loadLesson();
     this.getVerse();
+    this.convertFromHTML();
   }
 
   loadLesson = () => {
@@ -33,6 +34,13 @@ class Lesson extends Component {
         this.setState({ lesson: res.data, scriptures: res.data.scriptures })
       })
   };
+
+
+convertFromHTML=() => {
+  return <div dangerouslySetInnerHTML={ {__html: this.state.lesson.body}} />;
+}
+ 
+
 
   handleModal() {
     if (this.state.show === false) {
@@ -68,6 +76,7 @@ class Lesson extends Component {
   }
 
   render() {
+    
     return (
       <div>
         {isAuth() && (
@@ -75,7 +84,7 @@ class Lesson extends Component {
             )}
         <Layout />
             <button id="btn-scriptures" onClick={() => { this.handleModal() }}>Scriptures</button>
-        <h2>{this.state.lesson.title}</h2>
+        <h2 className="title-lesson">{this.state.lesson.title}</h2>
         <div className="main"></div>
         <div className="backLessonNav"></div>
         <div className="lessonNav">
@@ -102,7 +111,7 @@ class Lesson extends Component {
           </div>
         </div>
 
-        <div className="lessonDisplay">{this.state.lesson.body}</div>
+        <div className="lessonDisplay">{this.convertFromHTML()}</div>
         {isAuth() && (
         <UserLesson />
             )}
