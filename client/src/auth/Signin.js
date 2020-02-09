@@ -36,7 +36,7 @@ const Signin = ({ history }) => {
         setValues({ ...values, btnText: "Submitting" })
         axios({
             method: "POST",
-            url: process.env.REACT_APP_API + '/signin',
+            url: '/api/signin',
             data: { email, password }
         }).then(response => {
             console.log("Signed in!", response)
