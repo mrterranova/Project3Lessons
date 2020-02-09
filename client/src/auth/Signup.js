@@ -32,7 +32,11 @@ const Signup = () => {
                 setValues({ ...values, name: '', email: '', password: '', btnText: "Success" });
                 toast.success(response.data.message)
             }).catch(error => {
+<<<<<<< HEAD
                 
+=======
+                console.log('Error in Signup', error.response.data)
+>>>>>>> parent of 4101312e... handle problem
                 setValues({ ...values, btnText: 'Submit' });
                 toast.error(error.response.data.error)
             })
