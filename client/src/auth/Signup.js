@@ -32,7 +32,7 @@ const Signup = () => {
                 setValues({ ...values, name: '', email: '', password: '', btnText: "Success" });
                 toast.success(response.data.message)
             }).catch(error => {
-                console.log('Error in Signup', error.response.data)
+                
                 setValues({ ...values, btnText: 'Submit' });
                 toast.error(error.response.data.error)
             })

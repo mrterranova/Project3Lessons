@@ -4,11 +4,17 @@ const morgan = require("morgan");
 const cors = require("cors"); 
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
+const path = require("path")
 
 require('dotenv').config()
 
 //express function
 const app = express()
+
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
 
 //connect to db
 mongoose.connect(process.env.MONGODB_URI || process.env.DATABASE, {
@@ -30,12 +36,16 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors()); 
 
+router.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
 
 //middleware
 app.use('/api', authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
+
 
 
 //PORT 
