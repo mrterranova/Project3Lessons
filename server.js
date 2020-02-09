@@ -15,6 +15,9 @@ const app = express()
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
   }
+  router.use(function(req, res) {
+      res.sendFile(path.join(__dirname, "../client/build/index.html"));
+    });
 
 //connect to db
 mongoose.connect(process.env.MONGODB_URI || process.env.DATABASE, {
@@ -36,9 +39,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors()); 
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
 
 //middleware
 app.use('/api', authRoutes);
