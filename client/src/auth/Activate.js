@@ -26,7 +26,7 @@ const Activate = ({ match }) => {
         event.preventDefault();
         axios({
             method: 'POST',
-            url: `api/activation`,
+            url: `/api/activation`,
             data: { token }
         })
             .then(response => {
