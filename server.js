@@ -1,8 +1,8 @@
 //import following
 const express = require("express");
-// const morgan = require("morgan");
+const morgan = require("morgan");
 // const cors = require("cors"); 
-// const bodyParser = require("body-parser")
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 const path = require('path')
 //express function
@@ -35,8 +35,8 @@ const lessonRoutes = require('./routes/lessons')
 const notesRoutes = require('./routes/notes')
 
 //app middlewares
-// app.use(morgan('dev'));
-// app.use(bodyParser.json());
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 // app.use(cors()); 
 
 //middleware
