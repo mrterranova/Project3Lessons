@@ -1,22 +1,22 @@
 //import following
 const express = require("express");
 const morgan = require("morgan");
-// const cors = require("cors"); 
+const cors = require("cors"); 
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 const path = require('path')
 //express function
 const app = express()
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'build'))); 
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.static(path.join(__dirname, 'build'))); 
 
 require('dotenv').config()
 
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static('client/build'));
+// if (process.env.NODE_ENV === 'production') {
+//     // Set static folder
+//     app.use(express.static('client/build'));
 
 
 //connect to db
@@ -37,7 +37,7 @@ const notesRoutes = require('./routes/notes')
 //app middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-// app.use(cors()); 
+app.use(cors()); 
 
 //middleware
 app.use('/api', authRoutes);
@@ -46,11 +46,11 @@ app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
 
-app.use(express.static(path.join(__dirname, 'build'))); 
+// app.use(express.static(path.join(__dirname, 'build'))); 
 
-app.get('*', function(req,res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('*', function(req,res) {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 //PORT 
 const PORT = process.env.PORT || 8000
