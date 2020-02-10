@@ -8,15 +8,15 @@ const path = require('path')
 //express function
 const app = express()
 
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-// app.use(express.static(path.join(__dirname, 'build'))); 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'build'))); 
 
 require('dotenv').config()
 
-// if (process.env.NODE_ENV === 'production') {
-//     // Set static folder
-//     app.use(express.static('client/build'));
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
 
 
 //connect to db
@@ -46,11 +46,11 @@ app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
 
-// app.use(express.static(path.join(__dirname, 'build'))); 
+app.use(express.static(path.join(__dirname, 'build'))); 
 
-// app.get('*', function(req,res) {
-//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 //PORT 
 const PORT = process.env.PORT || 8000
