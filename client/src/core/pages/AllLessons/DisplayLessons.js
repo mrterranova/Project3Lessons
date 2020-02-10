@@ -22,7 +22,7 @@ class AllLessons extends Component {
   loadLessons = () => {
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_API}/api/lessons`,
+      url: `/api/lessons`,
     })
       .then(res => {
         this.setState({ lessons: res.data })
