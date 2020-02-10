@@ -16,5 +16,9 @@ router.get('admin/user', requireSignin, adminMiddleware, getAll );
 router.put('/admin/update', requireSignin,  adminMiddleware, updateAdmin );
 router.delete('/admin/user/delete/:id', requireSignin, adminMiddleware, deleteUserByAdmin)
 
+router.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
+
 //export the router with attached routes 
 module.exports = router;
