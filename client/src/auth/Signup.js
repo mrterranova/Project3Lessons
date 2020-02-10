@@ -16,7 +16,7 @@ const Signup = () => {
 
     const { name, email, password, btnText } = values
 
-    const handleChange = (name, email, password) => event => {
+    const handleChange = (name) => event => {
         setValues({ ...values, [name]: event.target.value })
     }
 
