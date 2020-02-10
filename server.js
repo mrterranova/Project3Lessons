@@ -1,3 +1,4 @@
+require('dotenv').config()
 //import following
 const express = require("express");
 const morgan = require("morgan");
@@ -6,7 +7,6 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 const routes = require("./routes")
 
-require('dotenv').config()
 
 //express function
 const app = express()
