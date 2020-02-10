@@ -4,7 +4,7 @@ const router = express.Router();
 const path = require('path')
 
 //import controllers from the following
-const { requireSignin, adminMiddleware } = require('../controllers/auth')
+const { requireSignin, adminMiddleware } = require('../../controllers/auth')
 const { 
     readLessons, 
     readLesson, 
@@ -16,7 +16,7 @@ const {
     postCuratorNote, 
     updateCuratorNote, 
     deleteCuratorNote 
-} = require('../controllers/lesson')
+} = require('../../controllers/lesson')
 
 console.log("LESSONS ROUTES")       
 //lesson routes

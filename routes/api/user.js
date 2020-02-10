@@ -3,8 +3,8 @@ const express = require('express')
 const router = express.Router();
 
 //import controllers from the following
-const { requireSignin, adminMiddleware } = require('../controllers/auth')
-const { read, update, deleteUser, getAll, updateAdmin, deleteUserByAdmin } = require('../controllers/user')
+const { requireSignin, adminMiddleware } = require('../../controllers/auth')
+const { read, update, deleteUser, getAll, updateAdmin, deleteUserByAdmin } = require('../../controllers/user')
 
 //user routes with correct authentication
 router.get('/user/:id', requireSignin,  read );

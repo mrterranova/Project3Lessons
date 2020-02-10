@@ -3,11 +3,11 @@ const express = require('express')
 const router = express.Router();
 
 //import controller
-const { signup, accountActivation, signin, updatePassword, resetPassword, googleLogin, facebookLogin} = require('../controllers/auth')
+const { signup, accountActivation, signin, updatePassword, resetPassword, googleLogin, facebookLogin} = require('../../controllers/auth')
 
 //import validators
-const { userSignupValidator, userSigninValidator, forgottenPasswordValidator, resetPasswordValidator } = require('../validators/auth')
-const { runValidation } = require('../validators')
+const { userSignupValidator, userSigninValidator, forgottenPasswordValidator, resetPasswordValidator } = require('../../validators/auth')
+const { runValidation } = require('../../validators')
 
 
 //routes for all authentication signing up/in features

@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router();
 
 //import controllers from the following
-const { requireSignin, adminMiddleware } = require('../controllers/auth')
+const { requireSignin, adminMiddleware } = require('../../controllers/auth')
 
 const { 
         //USER NOTES
@@ -19,7 +19,7 @@ const {
         updateBookmark, 
         deleteBookmark
 
-    } = require('../controllers/notes')
+    } = require('../../controllers/notes')
 
 //notes routes
 router.get('/notes', requireSignin, readNotes ); 
