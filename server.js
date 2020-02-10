@@ -5,6 +5,14 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 
+const path = require('path')
+
+app.use(express.static(path.join(__dirname, 'build'))); 
+
+app.get('*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
+
 require('dotenv').config()
 
 //express function
@@ -30,6 +38,8 @@ const notesRoutes = require('./routes/notes')
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.use(cors()); 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 //middleware

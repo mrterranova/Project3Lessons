@@ -1,6 +1,7 @@
 //import the following node files
 const express = require('express')
 const router = express.Router();
+const path = require('path')
 
 app.use(express.static(path.join(__dirname, 'build'))); 
 
