@@ -45,14 +45,13 @@ app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
-const router = express.Router();
 
+// app.use(express.static(path.join(__dirname, 'build'))); 
 
-router.use(express.static(path.join(__dirname, 'build'))); 
+// app.get('*', function(req,res) {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
-router.get('*', function(req,res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 //PORT 
 const PORT = process.env.PORT || 8000
 
