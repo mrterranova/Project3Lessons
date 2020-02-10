@@ -1,7 +1,7 @@
 //import following
 const express = require("express");
 const morgan = require("morgan");
-const cors = require("cors"); 
+// const cors = require("cors"); 
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 
@@ -29,7 +29,7 @@ const notesRoutes = require('./routes/notes')
 //app middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(cors()); 
+// app.use(cors()); 
 
 
 //middleware
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
   }
-  
+
 
 //PORT 
 const PORT = process.env.PORT || 8080

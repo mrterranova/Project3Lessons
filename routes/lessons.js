@@ -2,6 +2,12 @@
 const express = require('express')
 const router = express.Router();
 
+app.use(express.static(path.join(__dirname, 'build'))); 
+
+app.get('*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 //import controllers from the following
 const { requireSignin, adminMiddleware } = require('../controllers/auth')
 const { 
