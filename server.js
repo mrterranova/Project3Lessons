@@ -54,7 +54,7 @@ router.get('*', function(req,res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 //PORT 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => {
     console.log(`You are listening on PORT ${PORT}`)
