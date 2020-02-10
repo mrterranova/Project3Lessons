@@ -38,8 +38,6 @@ const notesRoutes = require('./routes/notes')
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.use(cors()); 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 
 //middleware
@@ -48,6 +46,8 @@ app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
