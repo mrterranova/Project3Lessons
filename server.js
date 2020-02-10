@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 
 const path = require('path')
+const app = express()
 
 app.use(express.static(path.join(__dirname, 'build'))); 
 
@@ -16,8 +17,10 @@ app.get('*', function(req,res) {
 require('dotenv').config()
 
 //express function
-const app = express()
 
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
 
 //connect to db
 mongoose.connect(process.env.MONGODB_URI || process.env.DATABASE, {
@@ -35,13 +38,10 @@ const lessonRoutes = require('./routes/lessons')
 const notesRoutes = require('./routes/notes')
 
 //app middlewares
-app.use(morgan('dev'));
-app.use(bodyParser.json());
+// app.use(morgan('dev'));
+// app.use(bodyParser.json());
 // app.use(cors()); 
 
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static('client/build'));
 
 
 //middleware
