@@ -3,26 +3,21 @@ const express = require('express')
 const router = express.Router();
 const path = require('path')
 
-app.use(express.static(path.join(__dirname, 'build'))); 
-
-app.get('*', function(req,res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 //import controllers from the following
 const { requireSignin, adminMiddleware } = require('../controllers/auth')
 const { 
-        readLessons, 
-        readLesson, 
-        postLesson, 
-        updateLesson, 
-        deleteLesson, 
-        readCuratorNotes, 
-        readCuratorNote, 
-        postCuratorNote, 
-        updateCuratorNote, 
-        deleteCuratorNote 
-    } = require('../controllers/lesson')
+    readLessons, 
+    readLesson, 
+    postLesson, 
+    updateLesson, 
+    deleteLesson, 
+    readCuratorNotes, 
+    readCuratorNote, 
+    postCuratorNote, 
+    updateCuratorNote, 
+    deleteCuratorNote 
+} = require('../controllers/lesson')
 
 console.log("LESSONS ROUTES")       
 //lesson routes
@@ -39,6 +34,11 @@ router.post( '/admin/lesson/post/:id', postCuratorNote );
 router.put( '/curator/notes/:id', requireSignin, adminMiddleware, updateCuratorNote );
 router.delete( '/curator/notes/:id', requireSignin, adminMiddleware, deleteCuratorNote );
 
+router.use(express.static(path.join(__dirname, 'build'))); 
+
+router.get('*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
   
 //export the router with attached routes 
 module.exports = router;
