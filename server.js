@@ -1,13 +1,15 @@
 //import following
 const express = require("express");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 // const cors = require("cors"); 
-const bodyParser = require("body-parser")
+// const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
 
 const path = require('path')
 const app = express()
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build'))); 
 
 app.get('*', function(req,res) {
@@ -50,8 +52,6 @@ app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
   
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
