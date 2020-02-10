@@ -4,25 +4,20 @@ const express = require("express");
 // const cors = require("cors"); 
 // const bodyParser = require("body-parser")
 const mongoose = require("mongoose"); 
-
 const path = require('path')
+//express function
 const app = express()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build'))); 
 
-app.get('*', function(req,res) {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
-
 require('dotenv').config()
-
-//express function
 
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
+
 
 //connect to db
 mongoose.connect(process.env.MONGODB_URI || process.env.DATABASE, {
@@ -44,20 +39,15 @@ const notesRoutes = require('./routes/notes')
 // app.use(bodyParser.json());
 // app.use(cors()); 
 
-
-
 //middleware
 app.use('/api', authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", lessonRoutes);
 app.use("/api", notesRoutes);
 
-  
-    app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-  }
-
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
 
 //PORT 
 const PORT = process.env.PORT || 8080
