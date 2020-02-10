@@ -24,7 +24,4 @@ router.post('/facebook-login', facebookLogin);
 
 //export all public and authenticated routes through router
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
 module.exports = router;

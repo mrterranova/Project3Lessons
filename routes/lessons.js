@@ -32,9 +32,6 @@ router.post( '/admin/lesson/post/:id', postCuratorNote );
 router.put( '/curator/notes/:id', requireSignin, adminMiddleware, updateCuratorNote );
 router.delete( '/curator/notes/:id', requireSignin, adminMiddleware, deleteCuratorNote );
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
   
 //export the router with attached routes 
 module.exports = router;

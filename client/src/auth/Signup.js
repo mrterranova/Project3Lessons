@@ -25,7 +25,7 @@ const Signup = () => {
         setValues({ ...values, btnText: "Submitting" })
             axios({
                 method: "POST",
-                url: '/api/signup',
+                url: process.env.REACT_APP_API+ '/api/signup',
                 data: { name, email, password }
             }).then(response => {
                 console.log("Signup Succeeded", response)

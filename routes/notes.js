@@ -35,9 +35,6 @@ router.post( '/user/bookmarks/:id', requireSignin, postBookmark);
 router.put( '/bookmarks/:id', requireSignin, updateBookmark ); 
 router.delete( '/bookmarks/:id', requireSignin, deleteBookmark ); 
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
 
 //export the router with attached routes 
 module.exports = router;
