@@ -35,7 +35,7 @@
     "mongoose": "^5.8.9",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "serve": "^11.3.0"
   },
